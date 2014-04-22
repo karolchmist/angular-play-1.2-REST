@@ -1,0 +1,8 @@
+.idea
+server/tmp
+server/test-result
+server/db
+*.imp
+*.ipr
+*.iml
+*.iws
