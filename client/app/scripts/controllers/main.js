@@ -4,10 +4,6 @@ angular.module('hellongApp')
   .controller('MainCtrl', ['$scope', 'Persons', function ($scope, Persons) {
         $scope.persons = Persons.query();
 
-        $scope.test = function() {
-            Persons.query();
-        };
-
         $scope.edit = function(person) {
             $scope.person = person;
         };
