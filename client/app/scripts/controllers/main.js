@@ -1,27 +1,33 @@
 'use strict';
 
 angular.module('hellongApp')
-  .controller('MainCtrl', ['$scope', function ($scope) {
-    $scope.people = [{
-        name : "Karol",
-        age : 31
-    },{
-        name : "Lukasz",
-        age : 32
-    }];
+  .controller('MainCtrl', ['$scope', 'Persons', function ($scope, Persons) {
+        $scope.persons = Persons.query();
 
-    $scope.currentPerson = [];
+        $scope.test = function() {
+            Persons.query();
+        };
 
-    $scope.delete = function(person, $index) {
-        $scope.people.splice(start, $index);
-    };
+        $scope.edit = function(person) {
+            $scope.person = person;
+        };
 
-    $scope.edit = function(person) {
-        $scope.currentPerson = person;
-    };
+        $scope.save = function() {
+            if($scope.person.$save) {
+                $scope.person.$save(function(data){
+                    $scope.person = null;
+                });
+            } else {
+                Persons.save($scope.person, function(data) {
+                    $scope.persons.push(data);
+                    $scope.person = null;
+                });
+            }
+        };
 
-    $scope.add = function(person) {
-        $scope.people.push(person);
-    } ;
-
-  }]);
+        $scope.delete = function(person, $index) {
+            person.$delete({id:person.id}, function() {
+                $scope.persons.splice($index, 1);
+            });
+        };
+    }]);

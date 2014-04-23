@@ -1,7 +1,14 @@
-<div ng-repeat="person in people">
+<div ng-repeat="person in persons">
     Hello {{ person.name }} age of {{ person.age }}
     <button ng-click="delete(person, $index)">x</button>
     <button ng-click="edit(person)" >edit</button>
 </div>
 
-<button ng-click="add()" />
+<button ng-click="edit({})">new</button>
+
+<div ng-show="person">
+    <input ng-model="person.id" ng-readonly="true">
+    <input ng-model="person.name">
+    <input ng-model="person.age">
+    <button ng-click="save()" >save</button>
+</div>

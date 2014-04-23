@@ -1,13 +1,28 @@
 package controllers;
 
+import com.google.gson.Gson;
 import models.Person;
+import play.Logger;
 import play.data.binding.ParamNode;
+import play.db.jpa.GenericModel;
+import play.db.jpa.JPABase;
+import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.Http;
+
+import java.util.List;
 
 /**
  *
  */
-public class Persons extends Controller {
+public class Persons extends AbstractController {
+
+    public static final Gson GSON = new Gson();
+
+    public static void query() {
+        List<Person> all = Person.findAll();
+        renderJSON(all);
+    }
 
     public static void get(Long id) {
         Person person = Person.findById(id);
@@ -15,29 +30,21 @@ public class Persons extends Controller {
         renderJSON(person);
     }
 
-    public static void create() {
-        Person person = Person.create("name", params);
-        if(person.validateAndSave()){
-            renderJSON(person.id);
+    public static void save() {
+        Person incoming = GSON.fromJson(params.get("body"), Person.class);
+        Person merged = incoming.merge();
+        if(merged.validateAndSave()){
+            renderJSON(merged);
         } else {
             error(validation.errorsMap().toString());
         }
     }
-    public static void update(Long id) {
-        Person person = Person.findById(id);
-        person.edit(ParamNode.convert(params.all()), "person");
-        validation.valid(person);
-        if(validation.hasErrors()) {
-            error(validation.errorsMap().toString());
-        } else{
-            person.save(); // explicit save here
-            ok();
-        }
-    }
+
     public static void delete(Long id) {
         Person person = Person.findById(id);
         notFoundIfNull(person);
         person.delete();
         ok();
     }
+
 }

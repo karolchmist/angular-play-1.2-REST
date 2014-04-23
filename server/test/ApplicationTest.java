@@ -6,7 +6,7 @@ public class ApplicationTest extends FunctionalTest {
 
     @Test
     public void testThatIndexPageWorks() {
-        Response response = GET("/");
+        Response response = GET("/persons");
         assertIsOk(response);
         assertContentType("application/json", response);
         assertCharset(play.Play.defaultWebEncoding, response);

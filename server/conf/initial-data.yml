@@ -1,3 +1,7 @@
-Doc(wtf):
-  title:title1
-  content:conten2
+Person(karol):
+  name: Karol
+  age: 32
+
+Person(fry):
+  name: Fry
+  age: 25

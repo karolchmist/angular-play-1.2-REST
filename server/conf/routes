@@ -11,10 +11,13 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+GET     /{controller}                 {controller}.query
 GET     /{controller}/{id}            {controller}.get
-POST    /{controller}/                {controller}.create
-PUT     /{controller}/{id}            {controller}.update
+POST    /{controller}                 {controller}.save
+#PUT     /{controller}/{id}            {controller}.update
 DELETE  /{controller}/{id}            {controller}.delete
+#OPTIONS /{controller}                 {controller}.options
 
 # Catch all (desactivated)
-# *       /{controller}/{action}                  {controller}.{action}
+*       /{controller}                  AbstractController.catchAll
+*       /{controller}/{action}         AbstractController.catchAll
