@@ -42,7 +42,7 @@ npm install phantomjs karma-phantomjs-launcher
 npm install karma-firefox-launcher  
 
 #Server Play
-play clean
-play deps --sync
-play eclipsify
+play clean  
+play deps --sync  
+play eclipsify  
 play run
